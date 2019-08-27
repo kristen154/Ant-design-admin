@@ -10,7 +10,7 @@ export const asnyRouter = [
     path: '/',
     icon: 'home',
     name: 'Login',
-    component: HelloWorld,
+    component: Layout,
   },{
     path: '/redirect',
     icon: 'redirect',
