@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <a-button size="small">dd</a-button>
+    <a-button size="small" @click="change">{{this.$store.state.name}}</a-button>
   </div>
 </template>
 
@@ -9,6 +9,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods:{
+    change(){
+      this.$store.dispatch('changeName',{key:'name',value: '广东'})
+    }
   }
 }
 </script>

@@ -4,7 +4,7 @@ import App from './App.vue'
 import 'ant-design-vue/dist/antd.css'
 import router from './router.js'
 import axios from 'axios'
-import store from './store'
+import store from './store/index.js'
 
 Vue.prototype.$axios = axios
 
