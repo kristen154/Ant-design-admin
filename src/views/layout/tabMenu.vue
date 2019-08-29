@@ -21,9 +21,7 @@
   export default{
     name:'tabMenu',
     components:{'v-content':Content},
-    created(){
-      console.log(this.$route,asnyRouter)
-    },
+
     data(){
       return {
         panes:asnyRouter,
@@ -48,8 +46,8 @@
     },
 
     watch:{
-      '$route': function(newRoute,oldRoute) {
-        console.log('route watch',newRoute.fullPath)
+      '$route': function(newRoute) {
+        //console.log('route watch',newRoute.fullPath)
         this.activePage = newRoute.fullPath
         if(!this.multiPage){
           this.linkList = [newRoute.fullPath]
@@ -60,7 +58,7 @@
         }
       },
       'activePage': function(key){
-        console.log('watch',key)
+        //console.log('watch',key)
         this.$router.push(key)
       },
 
@@ -74,7 +72,7 @@
         this.activePage = key
       },
       remove(key){
-        console.log('remove',key)
+        //console.log('remove',key)
         if(this.pageList.length === 1 ){
           this.$message.warning('这是最后一页，不能再关闭了啦')
           return

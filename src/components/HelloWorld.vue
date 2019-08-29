@@ -5,17 +5,22 @@
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  methods:{
-    change(){
-      this.$store.dispatch('changeName',{key:'name',value: '广东'})
+  import {URLPATH} from '@/requrl.js'
+  export default {
+    name: 'HelloWorld',
+    props: {
+      msg: String
+    },
+    methods:{
+      change(){
+        console.log(URLPATH)
+        this.$axios.get(URLPATH.LOGIN).then(res=>{
+          console.log('ds')
+        })
+        this.$store.dispatch('changeName',{key:'name',value: '广东'})
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

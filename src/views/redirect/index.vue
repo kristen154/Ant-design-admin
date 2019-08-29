@@ -5,7 +5,7 @@
       const { path } = params
       this.$router.replace({
         path: '/' + path, query
-      })
+      }).catch(err => { console.log(err) })
     },
     render: function(h){
       return h()

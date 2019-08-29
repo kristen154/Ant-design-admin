@@ -76,15 +76,23 @@ export default{
     },
 
     renderMenu(h,menu,pIndex,index){
+      //如果只有一个子组件，则侧栏显示子组件name,
       if(!menu.hidden){
-        return menu.children ? this.renderSubMenu(h,menu,pIndex,index) : this.renderItem(h,menu,pIndex,index);
+        if(!menu.children){
+          return this.renderItem(h,menu,pIndex,index);
+        }
+        else if(menu.children.length == 1){
+          return this.renderItem(h,menu.children[0],pIndex,index);
+        }else if(menu.children.length>1){
+          return this.renderSubMenu(h,menu,pIndex,index)
+        }
+        //return menu.children ? this.renderSubMenu(h,menu,pIndex,index) : this.renderItem(h,menu,pIndex,index);
       }
     },
 
     renderMenuTree(h,menuTree){
       var that = this
       let menuArr = []
-
       menuTree.forEach(function(item,i){
         menuArr.push(that.renderMenu(h,item,'0',i))
       })

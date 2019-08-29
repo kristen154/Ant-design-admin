@@ -3,11 +3,30 @@ import Router from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Layout from '@/views/layout/layout'
-import HelloWorld from '@/components/HelloWorld.vue'
+
+
+//vue router 报错： Uncaught (in promise) NavigationDuplicated {_name:""NavigationDuplicated"
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+
 Vue.use(Router)
 export const asnyRouter = [
   {
     path: '/',
+    icon: 'home',
+    name: 'Hellow',
+    component: Layout,
+    redirect:'/HelloWorld',
+    children:[{
+      path:'/HelloWorld',
+      name: 'single',
+      component:() => import('@/components/HelloWorld.vue')
+    }]
+  },{
+    path: '/login',
     icon: 'home',
     name: 'Login',
     component: Layout,
