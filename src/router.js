@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Layout from '@/views/layout/layout'
-
-
+import HelloWorld from '@/components/HelloWorld.vue'
+import store from '@/store'
+import {getToken} from '@/utils/auth'
 //vue router 报错： Uncaught (in promise) NavigationDuplicated {_name:""NavigationDuplicated"
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -29,7 +30,9 @@ export const asnyRouter = [
     path: '/login',
     icon: 'home',
     name: 'Login',
-    component: Layout,
+    hidden: true,
+    component: ()=>import('@/views/login/index'),
+    //component: HelloWorld,
   },{
     path: '/redirect',
     icon: 'redirect',
@@ -47,11 +50,32 @@ let router = new Router({
   scrollBehavior: () => ({y:0}),
   routes: asnyRouter
 })
+const whiteList = ['/login','/404']
+router.beforeEach((to, from, next)=> {
 
-router.beforeEach((to, from, next)=>{
   NProgress.start()
-  next()
-});
+  const hasToken = getToken()
+  if(hasToken){
+    console.log('ddd')
+    if(to.path==='/login'){
+      next({path: '/'})
+      NProgress.done()
+    }else{
+      next()
+    }
+  }else{
+    console.log('hhdddddd')
+    if (whiteList.indexOf(to.path) !== -1) { //如果在白名单里直接进入
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
+    }
+  }
+  }
+);
 
 
 router.afterEach(()=>{

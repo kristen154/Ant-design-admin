@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-
+import user from './modules/user'
+import getters from './getters.js'
 Vue.use(Vuex)
 const state = {
   name: 'kitt'
@@ -23,7 +23,11 @@ const actions = {
 const store = new Vuex.Store({
   state,
   mutations,
-  actions
+  actions,
+  getters,
+  modules:{
+    user
+  }
 })
 
 export default store
