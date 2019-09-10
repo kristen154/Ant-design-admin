@@ -16,24 +16,28 @@
 </template>
 
 <script>
-  import { asnyRouter } from '@/router.js'
   import Content from './content'
   export default{
     name:'tabMenu',
     components:{'v-content':Content},
 
     data(){
+      console.log('storeage',this.$store.getters.permission_routes)
       return {
-        panes:asnyRouter,
         pageList:[],
         linkList:[],
         activePage:'',
         menuVisible:false,
         multiPage:true,
-        activeKey: asnyRouter[0].path
       }
     },
     computed:{
+      panes(){
+        return this.$store.getters.permission_routes
+      },
+      activeKey(){
+        return this.$store.getters.permission_routes[0].path
+      },
       mutipage(){
         return true;
       }

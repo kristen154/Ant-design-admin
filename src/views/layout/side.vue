@@ -7,22 +7,28 @@
       defaultOpenKeys="['sub1']"
                mode="inline"
                theme="dark"
-               :inlineCollapsed="true" :menuList="asnyRouter"
+               :inlineCollapsed="true" :menuList="permission_routes"
     ></menu-list>
   </a-layout-sider>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import MenuList from './menuList.js'
-  import { asnyRouter } from '@/router.js'
+  import { constantRoutes } from '@/router.js'
   export default {
     name: '',
     components:{'menu-list':MenuList},
     props:['collapsed'],
     data(){
       return {
-        asnyRouter
+        constantRoutes
       }
+    },
+    computed:{
+      ...mapGetters([
+        'permission_routes'
+      ])
     }
   };
 </script>

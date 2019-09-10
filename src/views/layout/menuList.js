@@ -41,7 +41,8 @@ export default{
   },
   methods:{
     renderIcon(h,icon){
-      var iconString = icon !== undefined ? icon : iconArr[Math.floor(Math.random()*iconArr.length)]
+      console.log('renderIcon')
+      var iconString = icon != undefined ? icon : iconArr[Math.floor(Math.random()*iconArr.length)]
       return h(Icon,{props:{type:iconString}},)
     },
     renderMenuItem(h,menu){

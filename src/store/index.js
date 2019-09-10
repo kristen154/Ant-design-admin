@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './modules/user'
+import permission from './modules/permission'
 import getters from './getters.js'
 Vue.use(Vuex)
 const state = {
@@ -24,10 +25,12 @@ const store = new Vuex.Store({
   state,
   mutations,
   actions,
-  getters,
+
   modules:{
-    user
-  }
+    user,
+    permission
+  },
+  getters,
 })
 
 export default store
