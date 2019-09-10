@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Layout from '@/views/layout/layout'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Normalontent from '@/views/layout/normalContent'
 import store from '@/store/index.js'
 import {getToken} from '@/utils/auth'
 import {message} from 'ant-design-vue'
@@ -33,7 +33,7 @@ LayoutRouteTemplate.children = [i]
 Vue.use(Router)
 export const constantRoutes = [
   LayoutRouteTemplate,
-  ,{
+  {
     path: '/login',
     icon: 'home',
     name: 'Login',
@@ -52,6 +52,8 @@ export const constantRoutes = [
   }
 ]
 
+
+//自动添加到layout组件，
 export const asyncRoutes = [
   {
       path: '/test/index',
@@ -60,9 +62,22 @@ export const asyncRoutes = [
       component:() => import('@/components/test.vue')
   },{
     path: '/test/index1',
+    redirect:'/test/index1/test',
     icon:'user',
-    name:'test1',
-    component:() => import('@/components/test.vue')
+    name:'test3',
+    component:Normalontent,//有子组件必须有容器
+    children:[{
+      path:'/test/index1/test',
+      icon:'user',
+      name:'test1',
+      component:() => import('@/components/test2.vue')
+    },{
+      path:'/test/index1/test2',
+      icon:'user',
+      name:'test2',
+      component:() => import('@/components/test3.vue')
+    }]
+
   }
 ]
 
@@ -93,7 +108,8 @@ router.beforeEach(async(to, from, next)=> {
           LayoutRouteTemplate.children = accessRoutes
           LayoutRouteTemplate.path = '/'+accessRoutes[0].name
           LayoutRouteTemplate.redirect = accessRoutes[0].path
-          console.log('add',accessRoutes,LayoutRouteTemplate)
+
+          //动态添加到子组件
           router.addRoutes([LayoutRouteTemplate])
 
           // hack method to ensure that addRoutes is complete
