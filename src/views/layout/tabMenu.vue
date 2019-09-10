@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tabView">
     <a-tabs  type="editable-card" :active-key="activePage" :hide-add="true"
              @edit="editPage" @change="changePage"
     >
@@ -22,7 +22,6 @@
     components:{'v-content':Content},
 
     data(){
-      console.log('storeage',this.$store.getters.permission_routes)
       return {
         pageList:[],
         linkList:[],
@@ -51,18 +50,18 @@
 
     watch:{
       '$route': function(newRoute) {
-        //console.log('route watch',newRoute.fullPath)
+        console.log('route watch',newRoute.fullPath)
         this.activePage = newRoute.fullPath
         if(!this.multiPage){
           this.linkList = [newRoute.fullPath]
           this.pageList = [newRoute]
         }else if(this.linkList.indexOf(newRoute.fullPath) < 0){
+          console.log('dd')
           this.linkList.push(newRoute.fullPath)
           this.pageList.push(newRoute)
         }
       },
       'activePage': function(key){
-        //console.log('watch',key)
         this.$router.push(key)
       },
 
@@ -94,6 +93,8 @@
   }
 </script>
 
-<style>
-
+<style leng="less" scoped>
+  .tabView >>> .ant-tabs-nav .ant-tabs-tab-active{
+    font-weight:normal
+  }
 </style>

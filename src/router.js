@@ -103,7 +103,7 @@ router.beforeEach(async(to, from, next)=> {
         try{
           const { roles } = await store.dispatch('user/getInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes',roles)
-          console.log(accessRoutes)
+         // console.log(accessRoutes)
 
           LayoutRouteTemplate.children = accessRoutes
           LayoutRouteTemplate.path = '/'+accessRoutes[0].name

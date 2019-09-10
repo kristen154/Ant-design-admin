@@ -1,16 +1,15 @@
 <template>
-  <a-layout-content :style="{minHeight: minHeight}">
+  <a-layout-content style="height: 100%">
     <router-view />
   </a-layout-content>
 </template>
 
 <script>
-  const minHeight = window.innerHeight - 64 - 24 - 122
+
   export default{
     name:'',
     data(){
       return {
-        minHeight:minHeight + 'px'
       }
     }
   }
