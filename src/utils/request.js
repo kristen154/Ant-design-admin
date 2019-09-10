@@ -8,7 +8,6 @@ export function post(obj){
 }
 
 export function request(obj){
-  console.log('obj',obj)
   if(obj.method.toLowerCase() == 'get')  {
     return get(obj)
   }

@@ -30,7 +30,8 @@ const state = {
 const mutations = {
   SET_ROUTES: (state,routes)=>{
     state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
+    state.routes = constantRoutes[0].children.concat(routes)
+    console.log('state.route',constantRoutes[0])
   }
 }
 

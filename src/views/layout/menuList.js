@@ -41,7 +41,6 @@ export default{
   },
   methods:{
     renderIcon(h,icon){
-      console.log('renderIcon')
       var iconString = icon != undefined ? icon : iconArr[Math.floor(Math.random()*iconArr.length)]
       return h(Icon,{props:{type:iconString}},)
     },
@@ -95,7 +94,15 @@ export default{
       var that = this
       let menuArr = []
       menuTree.forEach(function(item,i){
-        menuArr.push(that.renderMenu(h,item,'0',i))
+        if(item.name=='layout'){
+          item.children.forEach((jItem,j)=>{
+            menuArr.push(that.renderMenu(h,jItem,i,j))
+          })
+
+        }else{
+          menuArr.push(that.renderMenu(h,item,'0',i))
+        }
+
       })
       return menuArr
     },

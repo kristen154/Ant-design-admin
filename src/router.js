@@ -14,21 +14,26 @@ Router.prototype.push = function push(location) {
 }
 
 
+const LayoutRouteTemplate = {
+  path: '/',
+  component: Layout,
+  name:'layout',
+  redirect:'/HelloWorld',
+  children:[
+  ],
+}
+const i = {
+    path:'/HelloWorld',
+    name: 'single',
+    icon:'home',
+    component:() => import('@/components/HelloWorld.vue')
+}
 
-
+LayoutRouteTemplate.children = [i]
 Vue.use(Router)
 export const constantRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    redirect:'/HelloWorld',
-    children:[{
-      path:'/HelloWorld',
-      name: 'single',
-      icon:'home',
-      component:() => import('@/components/HelloWorld.vue')
-    }]
-  },{
+  LayoutRouteTemplate,
+  ,{
     path: '/login',
     icon: 'home',
     name: 'Login',
@@ -49,19 +54,16 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
-    path: '/test',
-    icon: 'redirect',
-    component: Layout,
-    redirect:'/test/index',
-    name:'test',
-    children: [{
       path: '/test/index',
       icon:'lock',
       name:'test',
       component:() => import('@/components/test.vue')
-    }]
-    //component: HelloWorld,
-  },
+  },{
+    path: '/test/index1',
+    icon:'user',
+    name:'test1',
+    component:() => import('@/components/test.vue')
+  }
 ]
 
 let router = new Router({
@@ -87,14 +89,20 @@ router.beforeEach(async(to, from, next)=> {
           const { roles } = await store.dispatch('user/getInfo')
           const accessRoutes = await store.dispatch('permission/generateRoutes',roles)
           console.log(accessRoutes)
-          router.addRoutes(accessRoutes)
+
+          LayoutRouteTemplate.children = accessRoutes
+          LayoutRouteTemplate.path = '/'+accessRoutes[0].name
+          LayoutRouteTemplate.redirect = accessRoutes[0].path
+          console.log('add',accessRoutes,LayoutRouteTemplate)
+          router.addRoutes([LayoutRouteTemplate])
+
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         }catch(error){
           await store.dispatch('user/resetToken')
           console.log(error)
-          //message.error(error || 'has error')
+          message.error(error || 'has error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
 
